@@ -1,4 +1,4 @@
-module github.com/viktomas/logseq-export
+module github.com/braden-w/logseq-export
 
 go 1.19
 

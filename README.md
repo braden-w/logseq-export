@@ -7,8 +7,8 @@ Tool to export raw [Logseq](https://github.com/logseq/logseq) Markdown files (wi
 
 ## Install
 
-- Download the latest binary for your OS in the [Releases](https://github.com/viktomas/logseq-export/releases) page
-- `go install github.com/viktomas/logseq-export@latest` if you have Go installed
+- Download the latest binary for your OS in the [Releases](https://github.com/braden-w/logseq-export/releases) page
+- `go install github.com/braden-w/logseq-export@latest` if you have Go installed
 
 ## Usage
 
