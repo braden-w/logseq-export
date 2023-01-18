@@ -22,7 +22,7 @@ func generateFileName(originalName string, attributes map[string]string) string 
 		date = fmt.Sprintf("%s-", attributes["date"])
 	}
 
-	return fmt.Sprintf("%s%s.md", date, attributes["slug"])
+	return fmt.Sprintf("%s.md", attributes["slug"])
 }
 
 func addTitleIfMissing(p page) page {
