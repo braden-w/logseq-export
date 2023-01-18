@@ -17,11 +17,6 @@ func generateFileName(originalName string, attributes map[string]string) string 
 		return sanitizeName(originalName)
 	}
 
-	var date string
-	if _, ok := attributes["date"]; ok {
-		date = fmt.Sprintf("%s-", attributes["date"])
-	}
-
 	return fmt.Sprintf("%s.md", attributes["slug"])
 }
 
