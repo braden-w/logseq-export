@@ -10,7 +10,7 @@ import (
 )
 
 func sanitizeFileName(orig string) string {
-	return url.PathEscape(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(orig, " ", "-"),  "'", "%27")))
+	return url.PathEscape(strings.ToLower(strings.ReplaceAll(orig, " ", "-")))
 }
 
 func generateFileName(originalName string, attributes map[string]string) string {
