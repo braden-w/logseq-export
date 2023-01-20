@@ -8,13 +8,13 @@ import (
 	"strings"
 )
 
-func sanitizeName(orig string) string {
+func sanitizeFileName(orig string) string {
 	return strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(orig, " ", "-"),  "'", "%27"))
 }
 
 func generateFileName(originalName string, attributes map[string]string) string {
 	if _, ok := attributes["slug"]; !ok {
-		return sanitizeName(originalName)
+		return sanitizeFileName(originalName)
 	}
 
 	return fmt.Sprintf("%s.md", attributes["slug"])

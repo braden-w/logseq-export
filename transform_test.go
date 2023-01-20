@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestSanitizeName(t *testing.T) {
-	result := sanitizeName("Blog idea%3A All good laws that EU brought.md")
+func TestsanitizeFileName(t *testing.T) {
+	result := sanitizeFileName("Blog idea%3A All good laws that EU brought.md")
 	require.Equal(t, "blog-idea%3a-all-good-laws-that-eu-brought.md", result)
 }
 
