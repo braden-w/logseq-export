@@ -100,7 +100,7 @@ func parseOptions() exportOptions {
 func main() {
 	appFS := afero.NewOsFs()
 	options := parseOptions()
-	publicFiles, err := findMatchingFiles(appFS, options.graphPath, "public::", regexp.MustCompile(`^(logseq|.git)/`))
+	publicFiles, err := findMatchingFiles(appFS, options.graphPath, "draft::", regexp.MustCompile(`^(logseq|.git)/`))
 	if err != nil {
 		log.Fatalf("Error during walking through a folder %v", err)
 	}
@@ -149,7 +149,7 @@ func copyAssets(appFS afero.Fs, baseFile string, assetFolder string, assets []st
 		assetPath := filepath.Clean(filepath.Join(baseDir, relativeAssetPath))
 		_, assetName := filepath.Split(assetPath)
 		destPath := filepath.Join(assetFolder, assetName)
-		err := copy(appFS, assetPath, destPath)
+		err := copyFile(appFS, assetPath, destPath)
 		if err != nil {
 			return err
 		}

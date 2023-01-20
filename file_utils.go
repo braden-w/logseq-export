@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/afero"
 )
 
-func copy(appFS afero.Fs, src, dest string) error {
+func copyFile(appFS afero.Fs, src, dest string) error {
 	srcFile, err := appFS.Open(src)
 	if err != nil {
 		return err
