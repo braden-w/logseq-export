@@ -53,6 +53,14 @@ func removeTabFromMultiLevelBulletPoints(from string) string {
 	})
 }
 
+func wikilinksToLinks(from string) string {
+	return regexp.MustCompile(`\[\[(.+?)\]\]`).ReplaceAllStringFunc(from, func(s string) string {
+		match := regexp.MustCompile(`\[\[(.+?)\]\]`).FindStringSubmatch(s)
+		onlyLink := match[1]
+		return fmt.Sprintf("[%s](%s)", onlyLink, sanitizeFileName(onlyLink))
+	})
+}
+
 const multilineBlocks = `\n?(- .*\n(?:  .*\n?)+)`
 
 /*
@@ -152,5 +160,6 @@ func transformPage(p page, webAssetsPathPrefix string) page {
 		onlyText(secondToFirstBulletPoints),
 		onlyText(removeTabFromMultiLevelBulletPoints),
 		processMarkdownImages(webAssetsPathPrefix),
+		onlyText(wikilinksToLinks),
 	)
 }
