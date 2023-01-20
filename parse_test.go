@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var rawContent = `public:: true
+var rawContent = `draft:: false
 title:: Blog article: hello & world
 
 - First paragraph

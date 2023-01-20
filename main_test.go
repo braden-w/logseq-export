@@ -15,13 +15,13 @@ func TestFindMatchingFiles(t *testing.T) {
 	appFS.MkdirAll("/src/a", 0755)
 	appFS.MkdirAll("/src/.git", 0755)
 	appFS.MkdirAll("/src/logseq", 0755)
-	afero.WriteFile(appFS, "/src/a/b", []byte("public:: true"), 0644)
-	afero.WriteFile(appFS, "/src/.git/a", []byte("public:: true"), 0644)
-	afero.WriteFile(appFS, "/src/logseq/a", []byte("public:: true"), 0644)
-	afero.WriteFile(appFS, "/src/c", []byte("non public file"), 0644)
+	afero.WriteFile(appFS, "/src/a/b", []byte("draft:: false"), 0644)
+	afero.WriteFile(appFS, "/src/.git/a", []byte("draft:: false"), 0644)
+	afero.WriteFile(appFS, "/src/logseq/a", []byte("draft:: false"), 0644)
+	afero.WriteFile(appFS, "/src/c", []byte("non draft file"), 0644)
 
-	t.Run("it finds files with 'public::' string in them", func(t *testing.T) {
-		matchingFiles, err := findMatchingFiles(appFS, "/src", "public::", nil)
+	t.Run("it finds files with 'draft::' string in them", func(t *testing.T) {
+		matchingFiles, err := findMatchingFiles(appFS, "/src", "draft::", nil)
 
 		require.Nil(t, err)
 		require.Equal(t, []string{
@@ -32,7 +32,7 @@ func TestFindMatchingFiles(t *testing.T) {
 	})
 
 	t.Run("it ignores files based on the ignoreRegex", func(t *testing.T) {
-		matchingFiles, err := findMatchingFiles(appFS, "/src", "public::", regexp.MustCompile(`^(logseq|.git)/`))
+		matchingFiles, err := findMatchingFiles(appFS, "/src", "draft::", regexp.MustCompile(`^(logseq|.git)/`))
 
 		require.Nil(t, err)
 		require.Equal(t, []string{filepath.Join("/src", "a", "b")}, matchingFiles)

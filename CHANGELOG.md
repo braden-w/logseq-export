@@ -6,4 +6,4 @@
 ### 0.0.1 - 2022-09-25
 
 - initial version of logseq-export, it was even called logseq-extractor
-- the command looks through Logseq graph, finds all pages with `public::` in them and turns them into blog Markdown with front matter
+- the command looks through Logseq graph, finds all pages with `draft::` in them and turns them into blog Markdown with front matter

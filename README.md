@@ -1,6 +1,6 @@
 # logseq-export
 
-Tool to export raw [Logseq](https://github.com/logseq/logseq) Markdown files (with `public::` page property) into Markdown blog posts with front matter.
+Tool to export raw [Logseq](https://github.com/logseq/logseq) Markdown files (with `draft::` page property) into Markdown blog posts with front matter.
 
 - Takes Logseq page properties (`title:: Hello world`) and turns them into [Front Matter properties](https://gohugo.io/content-management/front-matter/) `title: Hello World`.
 - Changes the Markdown syntax to remove the top-level bullet points.
@@ -62,7 +62,7 @@ This will take my logseq notes and copies them to blog, it will also copy all th
 
 `content/posts/2022-09-25-test-page.md` :
 
-~~~md
+````md
 ---
 date: 2022-09-25
 categories: "category"
@@ -86,4 +86,4 @@ also
 have
 
 Multi-line strings
-~~~
+````
