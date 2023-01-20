@@ -9,7 +9,7 @@ import (
 )
 
 func sanitizeName(orig string) string {
-	return strings.ToLower(strings.ReplaceAll(orig, " ", "-"))
+	return strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(orig, " ", "-"),  "'", "%27"))
 }
 
 func generateFileName(originalName string, attributes map[string]string) string {
