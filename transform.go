@@ -100,11 +100,11 @@ func blogAssetUrl(logseqURL, imagePrefixPath string) string {
 }
 
 /*
-extractAssets finds all markdown images with **relative** URL e.g. `![alt](../assets/image.png)`
+processMarkdownImages finds all markdown images with **relative** URL e.g. `![alt](../assets/image.png)`
 it extracts the relative URL into a `page.assets“ array
 it replaces the relative links with `imagePrefixPath“: `{imagePrefixPath}/image.png`
 */
-func extractAssets(imagePrefixPath string) func(page) page {
+func processMarkdownImages(imagePrefixPath string) func(page) page {
 	return func(p page) page {
 		assetRegexp := regexp.MustCompile(`!\[.*?]\((\.\.?/.+?)\)`)
 		links := assetRegexp.FindAllStringSubmatch(p.text, -1)
@@ -151,6 +151,6 @@ func transformPage(p page, webAssetsPathPrefix string) page {
 		onlyText(firstBulletPointsToParagraphs),
 		onlyText(secondToFirstBulletPoints),
 		onlyText(removeTabFromMultiLevelBulletPoints),
-		extractAssets(webAssetsPathPrefix),
+		processMarkdownImages(webAssetsPathPrefix),
 	)
 }
