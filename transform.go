@@ -61,6 +61,14 @@ func wikilinksToLinks(from string) string {
 	})
 }
 
+// Takes a string layout and adds it to the file frontmatter
+func insertStringAsSecondLine(layout string) func(page) page {
+	return func(p page) page {
+		p.attributes["layout"] = layout
+		return p
+	}
+}
+
 const multilineBlocks = `\n?(- .*\n(?:  .*\n?)+)`
 
 /*
@@ -161,5 +169,6 @@ func transformPage(p page, webAssetsPathPrefix string) page {
 		onlyText(removeTabFromMultiLevelBulletPoints),
 		processMarkdownImages(webAssetsPathPrefix),
 		onlyText(wikilinksToLinks),
+		insertStringAsSecondLine( "../../layouts/ArticleLayout.astro"),
 	)
 }
