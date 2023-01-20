@@ -19,10 +19,9 @@ func GenerateFileName(t *testing.T) {
 		require.Equal(t, "name-with-space.md", result)
 	})
 
-	t.Run("does not combine slug and date into a filename", func(t *testing.T) {
+	t.Run("sanitizes filename if uppercase", func(t *testing.T) {
 		result := generateFileName("name with space.md", map[string]string{
-			"slug": "this-is-a-slug",
-			"date": "2022-09-24",
+			"slug": "THIS-IS-A-SLUG",
 		})
 		require.Equal(t, "this-is-a-slug.md", result)
 	})
