@@ -4,9 +4,9 @@ import "regexp"
 
 func parseTextAndAttributes(rawContent string) (string, map[string]string) {
 	result := regexp.MustCompile(`^((?:.*?::.*\n)*)\n?((?:.|\s)+)$`).FindStringSubmatch(rawContent)
-	attrArray := regexp.MustCompile(`(?m:^(.*?)::\s*(.*)$)`).FindAllStringSubmatch(result[1], -1)
+	frontmatterArray := regexp.MustCompile(`(?m:^(.*?)::\s*(.*)$)`).FindAllStringSubmatch(result[1], -1)
 	attributes := map[string]string{}
-	for _, attrStrings := range attrArray {
+	for _, attrStrings := range frontmatterArray {
 		attributes[attrStrings[1]] = attrStrings[2]
 	}
 	return result[2], attributes
