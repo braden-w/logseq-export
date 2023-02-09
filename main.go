@@ -60,6 +60,8 @@ func findMatchingFiles(appFS afero.Fs, rootPath string, substring string, ignore
 			line := fileScanner.Text()
 			if strings.Contains(line, substring) {
 				result = append(result, path)
+				// Print the path and stop scanning the file
+				// fmt.Println(path)
 				return nil
 			}
 		}
@@ -100,7 +102,7 @@ func parseOptions() exportOptions {
 func main() {
 	appFS := afero.NewOsFs()
 	options := parseOptions()
-	publicFiles, err := findMatchingFiles(appFS, options.graphPath, "public:: true", regexp.MustCompile(`^(logseq|.git|ignore-compile)/`))
+	publicFiles, err := findMatchingFiles(appFS, options.graphPath, "resonance: ", regexp.MustCompile(`^(logseq|.git|ignore-compile)/`))
 	if err != nil {
 		log.Fatalf("Error during walking through a folder %v", err)
 	}
