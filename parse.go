@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 )
 
@@ -13,11 +12,19 @@ func parseTextAndAttributes(rawContent string) (string, map[string]string) {
 	// For Obsidian Frontmatter
 	result := regexp.MustCompile(`^---\n((?:.|\n)*?)\n---\n?((?:.|\s)+)$`).FindStringSubmatch(rawContent)
 
-	// Print the result
-	fmt.Println(rawContent)
-	fmt.Println(result)
+	// Captures with regexes are 1-indexed, so result[1] is the first capture group, result[2] is the second, etc.
 
-	frontmatterArray := regexp.MustCompile(`(?m:^(.*?):\s*(.*)$)`).FindAllStringSubmatch(result[1], -1)
+	// Print the result
+	// fmt.Println(rawContent)
+	// fmt.Println(result)
+	
+	// result[1] is the inner frontmatter (the stuff between the ---)
+	innerFrontmatter := result[1]
+
+	// Remove all empty frontmatter from result[1]
+	keyValues := regexp.MustCompile(`(?m:^(.*?):\s*$)`).ReplaceAllString(innerFrontmatter, "")
+
+	frontmatterArray := regexp.MustCompile(`(?m:^(.*?):\s*(.*)$)`).FindAllStringSubmatch(keyValues, -1)
 	attributes := map[string]string{}
 	for _, attrStrings := range frontmatterArray {
 		attributes[attrStrings[1]] = attrStrings[2]
