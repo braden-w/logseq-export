@@ -102,6 +102,7 @@ func parseOptions() exportOptions {
 func main() {
 	appFS := afero.NewOsFs()
 	options := parseOptions()
+	// third argument is a substring that is searched in the file, fourth argument is for ignored files
 	publicFiles, err := findMatchingFiles(appFS, options.graphPath, "draft: ", regexp.MustCompile(`^(.obsidian|logseq|.git|ignore-compile)/`))
 	if err != nil {
 		log.Fatalf("Error during walking through a folder %v", err)
