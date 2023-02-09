@@ -56,9 +56,20 @@ func removeTabFromMultiLevelBulletPoints(from string) string {
 
 func wikilinksToLinks(from string) string {
 	return regexp.MustCompile(`\[\[(.+?)\]\]`).ReplaceAllStringFunc(from, func(s string) string {
+		// If the wikilink has a pipe, use the text after the pipe as the link text
+		// e.g. [[Some Page|Some Text]] -> [Some Text](some-page)
+		if strings.Contains(s, "|") {
+			match := regexp.MustCompile(`\[\[(.+?)\|(.+?)\]\]`).FindStringSubmatch(s)
+			// Some Page
+			page := match[1]
+			text := match[2]
+			return fmt.Sprintf("[%s](%s)", text, sanitizeFileName(page))
+		}
+
+		// Otherwise, use the page name as the link text
 		match := regexp.MustCompile(`\[\[(.+?)\]\]`).FindStringSubmatch(s)
-		onlyLink := match[1]
-		return fmt.Sprintf("[%s](%s)", onlyLink, sanitizeFileName(onlyLink))
+		page := match[1]
+		return fmt.Sprintf("[%s](%s)", page, sanitizeFileName(page))
 	})
 }
 
