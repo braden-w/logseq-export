@@ -3,8 +3,13 @@ package main
 import "regexp"
 
 func parseTextAndAttributes(rawContent string) (string, map[string]string) {
-	result := regexp.MustCompile(`^((?:.*?::.*\n)*)\n?((?:.|\s)+)$`).FindStringSubmatch(rawContent)
-	frontmatterArray := regexp.MustCompile(`(?m:^(.*?)::\s*(.*)$)`).FindAllStringSubmatch(result[1], -1)
+	// A set of regexes to parse the frontmatter, taking in the entire file content as a single string
+	// // For Logseq Frontmatter
+	// result := regexp.MustCompile(`^((?:.*?::.*\n)*)\n?((?:.|\s)+)$`).FindStringSubmatch(rawContent)
+	// frontmatterArray := regexp.MustCompile(`(?m:^(.*?)::\s*(.*)$)`).FindAllStringSubmatch(result[1], -1)
+	// For Obsidian Frontmatter
+	result := regexp.MustCompile(`^---((?:.*?:.*\n)*)\n---\n?((?:.|\s)+)$`).FindStringSubmatch(rawContent)
+	frontmatterArray := regexp.MustCompile(`(?m:^(.*?):\s*(.*)$)`).FindAllStringSubmatch(result[1], -1)
 	attributes := map[string]string{}
 	for _, attrStrings := range frontmatterArray {
 		attributes[attrStrings[1]] = attrStrings[2]
