@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"net/url"
 	"path"
 	"path/filepath"
 	"regexp"
@@ -10,7 +9,8 @@ import (
 )
 
 func sanitizeFileName(orig string) string {
-	return url.PathEscape(strings.ToLower(strings.ReplaceAll(orig, " ", "-")))
+	re := regexp.MustCompile("[^a-zA-Z0-9-_]+")
+	return strings.ToLower(re.ReplaceAllString(strings.ReplaceAll(orig, " ", "-"), ""))
 }
 
 func generateFileName(originalName string, attributes map[string]string) string {
@@ -29,7 +29,8 @@ func addTitleIfMissing(p page) page {
 }
 
 func addFileName(p page) page {
-	filename := generateFileName(p.filename, p.attributes)
+	// filename := generateFileName(p.filename, p.attributes)
+	filename := p.filename
 	folder := filepath.Join(path.Split(p.attributes["folder"])) // the page property always uses `/` but the final delimiter is OS-dependent
 	p.filename = filepath.Join(folder, filename)
 	return p
