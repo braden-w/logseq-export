@@ -1,0 +1,17 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build and copy to /usr/local/bin/",
+      "type": "shell",
+      "command": "go build -o logseq-export && cp logseq-export /usr/local/bin/"
+    },
+    {
+      "label": "build and run",
+      "type": "shell",
+      "command": "go build -o logseq-export && ./logseq-export --graphPath ~/Code/obsidian/Content --blogFolder ~/Code/optim/src/content/articles --unquotedProperties draft,link-github,link-medium,link-reddit,link-substack,link-twitter,public,subtitle,title --assetsRelativePath ../../../public/assets --webAssetsPathPrefix /assets"
+    }
+  ]
+}
