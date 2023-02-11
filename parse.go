@@ -18,6 +18,11 @@ func parseTextAndAttributes(rawContent string) (string, map[string]string) {
 	// fmt.Println(rawContent)
 	// fmt.Println(result)
 	
+	// If there is no frontmatter, return the entire content as the text and an empty map
+	if len(result) == 0 {
+		return rawContent, map[string]string{}
+	}
+	
 	// result[1] is the inner frontmatter (the stuff between the ---)
 	innerFrontmatter := result[1]
 
