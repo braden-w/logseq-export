@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
 	"io/fs"
@@ -55,16 +54,26 @@ func findMatchingFiles(appFS afero.Fs, rootPath string, substring string, ignore
 			return err
 		}
 		defer file.Close()
-		fileScanner := bufio.NewScanner(file)
-		for fileScanner.Scan() {
-			line := fileScanner.Text()
-			if strings.Contains(line, substring) {
-				result = append(result, path)
-				// Print the path and stop scanning the file
-				// fmt.Println(path)
-				return nil
-			}
+		// If the file directory contains the substring and is a markdown file, add it to the result
+		if strings.Contains(relativePath, substring) && strings.HasSuffix(path, ".md") {
+			// Print "Hit"
+			fmt.Println(relativePath)
+			result = append(result, path)
+			// Print the path and stop scanning the file
+			// fmt.Println(path)
+			return nil
 		}
+
+		// fileScanner := bufio.NewScanner(file)
+		// for fileScanner.Scan() {
+		// 	line := fileScanner.Text()
+		// 	if strings.Contains(line, substring) {
+		// 		result = append(result, path)
+		// 		// Print the path and stop scanning the file
+		// 		// fmt.Println(path)
+		// 		return nil
+		// 	}
+		// }
 		return nil
 	})
 	if err != nil {
@@ -103,7 +112,7 @@ func main() {
 	appFS := afero.NewOsFs()
 	options := parseOptions()
 	// third argument is a substring that is searched in the file, fourth argument is for ignored files
-	publicFiles, err := findMatchingFiles(appFS, options.graphPath, "draft: ", regexp.MustCompile(`^(.obsidian|logseq|.git|ignore-compile)/`))
+	publicFiles, err := findMatchingFiles(appFS, options.graphPath, "Content/", regexp.MustCompile(`^(.obsidian|logseq|.git|ignore-compile)/`))
 	if err != nil {
 		log.Fatalf("Error during walking through a folder %v", err)
 	}
